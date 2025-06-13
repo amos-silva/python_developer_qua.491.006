@@ -12,3 +12,14 @@ while True:
     print("1 - para CONTINUAR")
 
     operador = input("Continuar ou Sair: ").strip()   
+
+    gas = float(input("Informe valor da Gasolina: ").replace(",", "."))
+    eta = float(input("Informe valor do Etanol: ").replace(",", "."))
+
+    gas_calc = gas * 0.7
+    result = eta - gas_calc
+
+    if eta < gas_calc:
+        print(f" Etanol (30%) {result} a menos que a Gasolina -  VALE A PENA ABASTERNCER COM ETANOL.")
+    else:
+        print(f"Melhor abastecer com Gasolina.")
