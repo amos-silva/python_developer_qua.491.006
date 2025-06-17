@@ -44,7 +44,14 @@ while True:     # Laço de Repetição - while True
         else:
             print("ACIMA")    
 
-        opcao = input("Novo calculo? S / N : ").lower().strip()    # louwer para digitos minusculos ou maisculos / strip para caracter invalido
+        while True:
+            opcao = input("Novo calculo? S / N : ").lower().strip()    # louwer para digitos minusculos ou maisculos / strip para caracter invalido
+            if opcao == "s" or opcao == "n":
+                break
+            else:
+                print("Opção inválida")
+                continue
+
         match opcao:        # match e case , usa para varias opções
             case "s":
                 continue
