@@ -8,7 +8,7 @@
 import os
 import math as m
 
-while True:
+while True:     # looping
     try:    
 
         raio = float(input("Informe o Raio do circulo: ").replace(",", "."))
