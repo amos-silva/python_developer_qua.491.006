@@ -1,15 +1,9 @@
 import os
 import time
 import datetime
-from datetime import date
 
-hoje = date.today().strftime("%d/%m/%Y")
-hora = datetime.datetime.now().strftime("%H:%M:%S")
-
-print(f"Hora da Execução: {hora}")
-
-while True:
-    hora == hora
-    os.system("cls")
-    print(f"{hora}")
+while True:     # looping
+    hora = datetime.datetime.now().strftime("%H:%M:%S")
+    os.system("cls" if os.name == "nt" else "clear")
+    print(f"Hora Atual:>>>  {hora}")
     time.sleep(1)
