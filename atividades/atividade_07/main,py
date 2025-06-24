@@ -1,0 +1,69 @@
+""" programa que com as operações:
+    Cadastre novo nome da lista
+    Liste todos os nomes
+    Pesquise por um nome
+    Altere um nome
+    Exclua um nome
+    Sair do programa
+    a lista deve iniciar vazia lista = []
+"""
+
+while True:
+    nomes = []
+    for nome in nomes:
+        print(f"Lista de nomes: {nome}")
+
+    for nome in nomes:
+        print(nome)
+
+    menu = input("Informe a opção desejada: ").strip()
+
+   
+
+    novo = input(">>> Inserir Novo Nome: ").title().strip()
+
+    nomes.append(novo)
+
+    for nome in nomes: 
+        print(f"Nova Lista de nomes: {nome}")
+
+    pesquisa = input("Informe o nome da pesquisa: ").title().strip()
+
+    qtde = nomes.count(pesquisa)
+
+    print(f"{pesquisa} Foi encontrado {qtde} vezes na lista")
+    for i in range(len(nomes)):     
+        print(f"Indice: {i}: {nomes[i]}")
+
+    try:  
+        i = int(input("Informe a posição da lista que deseja alterar: "))
+
+        if i>=0 and i <len(nomes):  
+            nomes[i] = input("Informe o novo nome: ").capitalize().strip()
+            print("Nome alterado com sucesso!")
+        else:
+            print("Nome inválido <<<\n")
+
+    except Exception as e:
+        print(f"Não foi possivel alterar. {e}")
+    finally:   
+        for i in range(len(nomes)):
+            print(f"Indice {i}: {nomes[i]}")
+
+
+    for i in range(len(nomes)):
+        print(f"{i}: {nomes[i]}")
+
+    try:
+        i = int(input("informe a posição para excluir: "))
+        if i>=0 and i < len(nomes):
+            del(nomes[i])
+            print("Nome excluido com sucesso !")
+        else:
+            print("Posição inválida !")
+
+    except Exception as e:
+        print(f"Não foi possivel excluir. {e}")
+    finally:
+        for i in range(len(nomes)):
+            print(f"{i}: {nomes[i]}")
