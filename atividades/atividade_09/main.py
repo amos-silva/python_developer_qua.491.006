@@ -8,120 +8,138 @@ criar programa que façaas seguintes funções:
 #saia do programa
 ## Dados do usuario: Nome completo, DN, email, CPF, Tel, Genero, Data do cadastro, Hora do cadastro
 """
+# bibliotecas
 import os
 import random
 import datetime
 from datetime import date
 
-lista = []      #Lista Vazia
+# lista vazia
+usuarios = []
 
-data = date.today().strftime("%d/%m/%Y") #converter data para Brasil
-hora = datetime.datetime.now().strftime("%H:%M:%S") #converter hora para Brasil
+# loop
+while True:
+    # dicionário
+    usuario = {}
 
-while True: #MENU
-    usuario = {}        #Dicionario Vazio
+    # menu
+    print("1 - Cadastrar novo usuário")
+    print("2 - Listar usuários")
+    print("3 - Alterar dados de um usuário")
+    print("4 - Sortear usuário")
+    print("5 - Excluir usuário")
+    print("6 - Sair do programa")
+    opcao = input("Informe a opção desejada: ").strip()
 
-    print(" ------------------ MENU ------------------ ")
-    print("1 - Cadastrar novo Usuário")
-    print("2 - Listar Usuários")
-    print("3 - Alterar um Dados")
-    print("4 - Sortear Usuário")
-    print("5 - Excluir um Usuário")
-    print("6 - SAIR")
-    print(" ------------------------------------------ ")
-
-    opcao = input("Informe a opção: ").strip()
+    # limpa a tela
     os.system("cls" if os.name == "nt" else "clear")
 
+    # verifica a opção do usuário
     match opcao:
         case "1":
             try:
-                for chave in usuario:
-                    print(f"{chave.capitalize()}: {usuario.get(chave)}")    #capitalize para Caixa Alta
+                usuario['nome'] = input("Informe o nome: ").strip().title()
+                usuario['data de nascimento'] = input("Informe a data de nascimento: ").strip()
+                usuario['email'] = input("Informe o email: ").strip().lower()
+                usuario['cpf'] = input("Informe o CPF: ").strip()
+                usuario['telefone'] = input("Informe o telefone: ").strip()
+                usuario['genero'] = input("Informe o gênero: ").strip()
+                usuario['data do cadastro'] = date.today().strftime("%d/%m/%Y")
+                usuario['hora do cadastro'] = datetime.datetime.now().strftime("%H:%M:%S")
 
-                usuario['nome'] = input("Informe o Nome: ").title().strip()
-                usuario['dn'] = input("Informe a Data de Nascimento: ").title().strip()
-                usuario['email'] = input("Informe Email: ").title().strip()
-                usuario['cpf'] = (input("Informe o CPF: ")).title().strip()
-                usuario['tel'] = (input("Informe o Telefone: ")).title().strip()
-                usuario['genero'] = input("Informe o Genero: ").title().strip()
-                usuario['data'] = print(f"Data: {data}")
-                usuario['hora'] = print(f"Hora: {hora}")
+                usuarios.append(usuario)
+                os.system("cls" if os.name == "nt" else "clear")
 
-                lista.append(usuario)   #Adicionar dicionario dentro da lista
-          
-                print("Usuário cadastrado com sucesso! \n")
-
+                print(f"Usuário {usuario.get('nome')} cadastrado com sucesso.")
             except Exception as e:
-             print(f"Não foi possivel Cadastrar. {e}")
+                print(f"Não foi possível cadastrar usuário. {e}.")
             finally:
                 continue
-           
         case "2":
             try:
-                print(" --------------LISTA DE USUÁRIOS------------------- ")
-                for chave in usuario:
-                    print(f"{chave.capitalize()}: {usuario.get(lista)}")    #capitalize para Caixa Alta
-                    for usuario in lista:
-                        print(f"{lista.capitalize()}: {usuario.get(usuario)}")  
-
+                for i in range(len(usuarios)):
+                    print(f"Índice: {i}")
+                    for chave in usuarios[i]:
+                        print(f"{chave.capitalize()}: {usuarios[i].get(chave)}")
+                    print('-'*40)
             except Exception as e:
-                print(f"Não foi possivel Exibir. {e}")
+                print(f"Não foi possível listar usuários. {e}.")
             finally:
                 continue
-
         case "3":
             try:
-                for chave in usuario:
-                    print(f"{chave}: {usuario.get(chave)}")
-                
-                    #ALTERAR UMA CHAVE DO DICIONARIO - Informe a chave :
-                    chave = input("Informe a chave para alterar: ").lower().strip()
-
-                    if chave in usuario:        #Verificar se existe a chave
-                        usuario[chave] = input(f"Informe o novo valor: {chave}: ").strip()
-                        print("---------- DADOS ALTERADOS ------------")
-                    else:
-                        print("Valor inexistente")
-                    for chave in usuario:
-                        print(f"{chave}: {usuario.get(chave)}")
-                        
+                i = int(input("Informe o índice que deseja alterar: "))
+                os.system("cls" if os.name == "nt" else "clear")
+                if i >= 0 and i < len(usuarios):
+                    print(f"{'-'*20} Dados do usuário {'-'*20}")
+                    for chave in usuarios[i]:
+                        print(f"{chave.capitalize()}: {usuarios[i].get(chave)}")
+                    print("\n")
+                    while True:
+                        chave_escolhida = input("Informe a chave a alterar:").strip().lower()
+                        if chave_escolhida in usuarios[i]:
+                            usuarios[i][chave_escolhida] = input(f"Informe o novo valor de {chave_escolhida}: ")
+                            os.system("cls" if os.name == "nt" else "clear")
+                            print("Chave alterada com sucesso.")
+                        else:
+                            print("Chave inexistente.")
+                        while True:
+                            prosseguir = input("Deseja alterar outra chave? (s/n): ").strip().lower()
+                            if prosseguir == "s" or prosseguir == "n":
+                                break
+                            else:
+                                continue
+                        match prosseguir:
+                            case "s":
+                                continue
+                            case "n":
+                                break
+                else:
+                    print("Índice inválido.")
             except Exception as e:
-                print(f"Não foi possivel ALTERAR. {e}")
+                print(f"Não foi possível alterar dados. {e}.")
             finally:
                 continue
-
         case "4":
-            try:                
-                i = random.randint(0, len(lista)-1)   #conta a lista, 0 é o primeiro e len conta o tamanho da lista
-                print(f"Nome sorteado: {lista[i]}")
-                continue
-                    
+            try:
+                i = random.randint(0, len(usuarios)-1)
+                print("Usuário sorteado:")
+                for chave in usuarios[i]:
+                    print(f"{chave.capitalize()}: {usuarios[i].get(chave)}")
             except Exception as e:
-                print(f"Erro ao Sortear. {e}")
+                print(f"Não foi possível sortear usuário. {e}.")
             finally:
                 continue
-
         case "5":
             try:
-                for chave in usuario:
-                    print(f"{chave}: {usuario.get(chave)}")
-                    print("----------------------------")
-
-                #DELETAR UMA CHAVE DO DICIONARIO - Informe a chave :
-                chave = input("Informe a chave para DELETAR: ").lower().strip()
-
-                if chave in usuario:        #Verificar se existe a chave
-                    del usuario[chave]
-                    print("----------USUÁRIO DELETADO------------")
+                i = int(input("Informe o índice a ser excluído: "))
+                if i >= 0 and i < len(usuarios):
+                    for chave in usuarios[i]:
+                        print(f"{chave.capitalize()}: {usuarios[i].get(chave)}")
+                    while True:
+                        excluir = input("Tem certeza? (s/n): ").strip().lower()
+                        if excluir == "s" or excluir == "n":
+                            break
+                        else:
+                            print("Opção inválida.")
+                            continue
+                    match excluir:
+                        case "s":
+                            del usuarios[i]
+                            os.system("cls" if os.name == "nt" else "clear")
+                            print("Usuário excluído com sucesso.")
+                        case "n":
+                            os.system("cls" if os.name == "nt" else "clear")
+                            print("Usuário não excluído.")
                 else:
-                    print("Chave inexistente")                
-                    
+                    print("Índice inválido.")
             except Exception as e:
-                print(f"Não foi possivel DELETAR. {e}")
+                print(f"Não foi possível excluir usuário. {e}.")
             finally:
                 continue
-
         case "6":
-            print(" VC SAIU ")
+            print("Programa encerrado.")
             break
+        case _:
+            print("Opção inválida.")
+            continue
