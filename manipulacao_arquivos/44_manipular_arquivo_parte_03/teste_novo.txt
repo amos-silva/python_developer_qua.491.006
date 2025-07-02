@@ -1,0 +1,1 @@
+teste de novo arquivo com texto, salvo em txt dentro da pasta de trabalho

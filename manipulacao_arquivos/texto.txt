@@ -1,0 +1,1 @@
+Inicio das aulas de manipulação de arquivos, na linguagem python.🐍
