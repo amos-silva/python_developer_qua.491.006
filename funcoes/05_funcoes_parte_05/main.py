@@ -27,7 +27,8 @@ if __name__ == "__main__":  # BLOQUEAR PARA QUE O MAIN NÃO SEJA IMPORTADO PARA 
                     b = float(input("Informe o valor de B: ").replace(",", "."))
                     c = float(input("Informe o valor de C: ").replace(",", "."))
                     x = mo.segundo_grau(a, b, c)
-                    print(x)
+                    for result in x:
+                        print(f"{result}")
 
                 except Exception as e:
                     print(f"Erro. {e}")
