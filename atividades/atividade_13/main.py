@@ -13,68 +13,87 @@ Sacar valor
 imprimir extrato (gerar arquivo)
 sair do programa
 """
-import classes as cl
+import classes as c
+import os
 
+limpar = lambda: os.system("cls" if os.name == "nt" else "clear")
 
 # ALGORITIMO PRINCIPAL
 if __name__ == "__main__":
-    conta = cl.Conta(
-        titular="",
-        cpf="",
-        agencia="",
-        num_conta="",
-        saldo=""
-    )
 
+    # Instancia da Classe Conta
+    conta = c.Conta(titular="", cpf="", agencia="", num_conta="", saldo=0.0)
 
-# INPUT
-while True:
-        try:
-            print("1 - Cadastrar novo Correntista.")
-            print("2 - Consultar dados da conta.")
-            print("3 - Depositar.")
-            print("4 - Sacar.")
-            print("5 - Extrato.")
-            print("6 - SAIR.")                    
-            opcao = input("Escolha uma opção: ").strip()
+    # Define os valores dos atributos da Classe
+    print(" ---------- 🐍 BANCO COBRA 🐍 ----------")
+    conta.titular = input("Informe o nome do Titular: ").strip().title()
+    conta.cpf = input("Informe o CPF: ").strip()
+    conta.agencia = "1010-1"
+    conta.num_conta = "102030-1"
+    limpar()
 
-            ...
+    while True:
+            try:
+                print(" ---------- 🐍 BANCO COBRA 🐍 ----------")
+                print("1 - Consultar dados da conta.")
+                print("2 - Depositar.")
+                print("3 - Sacar.")
+                print("4 - Extrato.")
+                print("5 - SAIR.")                    
+                opcao = input("Escolha uma opção: ").strip()
+                limpar()
 
-            match opcao:
-                case "1":
-                    r = float(input("Informe o Raio: ").replace(",", "."))
-                    print(f"A Area do circulo é: {mo.area(r)}")
-                
-                case "2":
-                    r = float(input("Informe o Raio: ").replace(",", "."))
-                    print(f"A Circunferencia do circulo é: {mo.circ(r)}")
+                match opcao:
+                    case "1":
+                        conta.consultar_dados()
+                        continue
+            
+                    case "2":
+                        try:
+                            valor = float(input("Informe o valor do DEPOSITO: R$ ").replace(",","."))
+                            if valor > 0:
+                                print(f"Deposito efetuado com Sucesso. Novo Saldo R$ {conta.depositar(valor):.2f}")                                
+                            else:
+                                print("Valor invalido")
+                                
+                        except Exception as e:
+                            print(f"ERRO. {e}")
+                        finally:
+                            continue                    
+                        
+                    case "3":
+                        try:
+                            valor = float(input("Informe o valor do SAQUE: R$ ").replace(",","."))
+                            if valor > 0:
+                                if valor <= conta.saldo:
+                                    print(f"SAQUE efetuado com Sucesso. Novo Saldo R$ {conta.sacar(valor):.2f}")   
+                                else:
+                                    print("Saldo INSUFICIENTE!")
+                            else:
+                                print("Valor invalido")
+                                
+                        except Exception as e:
+                            print(f"ERRO. {e}")
+                        finally:
+                            continue  
+                    case "4":
+                        try:
+                            conta.extrato()
+                            print("Extrato impresso com sucesso!")
+                            
+                                
+                        except Exception as e:
+                            print(f"ERRO ao IMPRIMIR. {e}")
+                        finally:
+                            continue
 
-                case "3":
-                    print("SAIU ! ")
-                    break
-                
-                case _:
-                    print("Opção invalida")
-                    continue        
-        except Exception as e:
-            print("ERRO, {e}")
-            continue
-
-
-
-
-
-"""
-try:
-    conta.titular = input("Informe seu Nome: ").strip().title()
-    conta.cpf = input("Informe seu CPF: ").strip().title()
-    conta.agencia = input("Informe a Agencia: ").strip().title()
-    conta.num_conta = input("Informe N. da Conta: ").strip().title()
-    conta.saldo = float(input("Saldo: ").replace(",", "."))
-
-# CHAMAR O METODO
-    print(conta.apresentar())
-
-except Exception as e:
-    print("ERRO ao criar Objeto. {e}")
-"""
+                    case "5":
+                        print("VC SAIU DA CONTA! ")
+                        break
+                    
+                    case _:
+                        print("Opção invalida")
+                        continue        
+            except Exception as e:
+                print("ERRO, {e}")
+                continue
