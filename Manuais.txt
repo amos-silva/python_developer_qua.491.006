@@ -1,0 +1,33 @@
+# INSERIR CREDENCIAIS
+git config --global --list
+git config --global user.name "nome"
+git config --global user.email "email"
+
+# REMOVER CREDENCIAIS
+git config --global --unset user.name
+git config --global --unset user.email
+
+# SALVAR PROJETO
+git status
+git add .
+git commit -m "mensagem"
+git push
+
+
+# RECUPERAR PROJETO
+copiar o endereço do repositório no git hub
+Terminanl do VS Code
+# Criar a venv
+python -m venv .venv
+.venv\Scriptis\activate
+
+# CRIAR AMBIENTE VIRTUAL
+create enviroment ou F1
+
+
+# PROFESSOR ALEX MACHADO RIBEIRO
+github.com/alexmachadoribeiro/curso_python
+
+# VS CODE  OU  NOTEPAD ++
+Extesões: jupyter, python, comment anchors, error lens, polacode
+
