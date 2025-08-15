@@ -1,14 +1,14 @@
 import pyautogui as auto
-# import 
+import time
+
 
 
 def main():
-    auto.PAUSE = 1
+    # auto.PAUSE = 1
     # auto.hotkey("ctrl","j")
-
-    auto.press("enter")
-    auto.write("cd..")
-    auto.press("enter")
+    # auto.press("enter")
+    # auto.write("cd..")
+    # auto.press("enter")
 
     auto.press("git config --global --unset-all usert.nome")
     auto.press("enter")
@@ -24,8 +24,11 @@ def main():
     auto.press("enter")
     auto.write("git add .")
     auto.press("enter")
-    auto.write('git commit -m "aula de automação"')
+
+    msg = input("aula do Dia: ")
+    auto.write(f'git commit -m {msg}')
     auto.press("enter")
+    
     auto.write("git push")
     auto.press("enter")  
 
