@@ -26,7 +26,7 @@ def main():
     auto.press("enter")
 
     msg = input("aula do Dia: ")
-    auto.write(f'git commit -m {msg}')
+    auto.write(f"git commit -m {msg}")
     auto.press("enter")
     
     auto.write("git push")
