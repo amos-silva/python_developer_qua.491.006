@@ -8,7 +8,7 @@ def tirar_credenciais():
     auto.press("enter")
 
 def main():
-    auto.PAUSE = 1
+    auto.PAUSE =0.5
 
     usuario = input("Informe o user.name do GIT: ").strip().lower()
     email = input("Informe o user.email do GIT: ").strip().lower()

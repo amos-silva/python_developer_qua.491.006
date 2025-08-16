@@ -6,6 +6,8 @@ git config --global user.email "email"
 # REMOVER CREDENCIAIS
 git config --global --unset user.name
 git config --global --unset user.email
+git config --global --unset-all usert.nome
+git config --global --unset-all usert.email
 
 # SALVAR PROJETO
 git status
@@ -19,7 +21,7 @@ copiar o endereço do repositório no git hub
 Terminanl do VS Code
 # Criar a venv
 python -m venv .venv
-.venv\Scriptis\activate
+.venv\Scripts\activate
 
 # CRIAR AMBIENTE VIRTUAL
 create enviroment ou F1
