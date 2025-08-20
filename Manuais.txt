@@ -33,3 +33,10 @@ github.com/alexmachadoribeiro/curso_python
 # VS CODE  OU  NOTEPAD ++
 Extesões: jupyter, python, comment anchors, error lens, polacode
 
+
+# instalar bibliotecas já usadas em um prjeto
+pip freeze > requirements.txt
+pip install -r requirements.txt
+
+# Restaurar atualizações do GitHub
+git pool
