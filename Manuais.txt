@@ -21,7 +21,8 @@ copiar o endereço do repositório no git hub
 Terminanl do VS Code
 # Criar a venv
 python -m venv .venv
-.venv\Scripts\activate
+git 
+
 
 # CRIAR AMBIENTE VIRTUAL
 create enviroment ou F1
