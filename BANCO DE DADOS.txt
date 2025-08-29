@@ -1,0 +1,194 @@
+MODULO
+
+from datetime import datetime
+import os
+
+
+limpar = lambda: os.system("cls" if os.name == "nt" else "clear")
+
+
+def cadastrar_pessoa(session, Pessoa):
+    try:
+        nome = input("Digite o nome da Pessoa: ").strip().title()
+        email = input("Digite o Email: ").strip().lower()
+
+        pessoas = session.query(Pessoa).filter(Pessoa.email.like(f"{email}")).all()
+
+        if email in [pessoa.email for pessoa in pessoas]:
+            print("E-mail já cadastrado !")
+        else:
+            data_nasc = input("Digite a Data de Nascimento (dd/mm/aaaa): ").strip()
+
+            data_nasc = datetime.strptime(data_nasc, "%d/%m/%Y").date()
+            nova_pessoa = Pessoa(nome=nome, email=email, data_nasc=data_nasc)
+
+            session.add(nova_pessoa)    # faz a sessão no banco e envia o comando nova pessoa usando SQL automaticamente
+            session.commit()            # Executa os comandos SQL dentro do banco
+
+            print(f"\nA Pessoa: {nome}, foi cadastrada com Sucesso!")
+    except Exception as e:
+        print(f"Não foi possivel cadastrar !")
+
+def listar_pessoas(session, Pessoa):
+    try:
+        pessoas = session.query(Pessoa).all()    # lista tudo que tem na tabela Pessoa
+
+        print("\n PESSOAS CADASTRADAS:\n")
+        for pessoa in pessoas:
+            print(f"ID: {pessoa.id_pessoa}")
+            print(f"Nome: {pessoa.nome}")
+            print(f"Email: {pessoa.email}")
+            print(f"Data_Nasc: {pessoa.data_nasc.strftime("%d/%m/%Y")}")
+            print(f"{'-'*40}\n")
+    except Exception as e:
+        print(f"Não foi possivel Listar !")
+
+def pesquisar_pessoas(session, Pessoa):
+        
+    print(f"{'-'*20}  Filtrar pessoas por campo  {'-'*20}")
+    print("1 - ID")
+    print("2 - Nome")
+    print("3 - E-mail")
+    print("4 - Data de Nasc.")
+    print("5 - Retornar")
+
+    campo = input("Informe o Campo a pesquisar: ").strip()
+
+    limpar()
+
+    match campo:
+        case "1":
+            valor = input("Digite o ID: ").strip()
+            pessoas = session.query(Pessoa).filter(Pessoa.id_pessoa.like(f"{valor}")).all()
+        case "2":
+            valor = input("Digite o Nome: ").strip()
+            pessoas = session.query(Pessoa).filter(Pessoa.nome.like(f"%{valor}%")).all()
+        case "3":
+            valor = input("Digite o E-mail: ").strip()
+            pessoas = session.query(Pessoa).filter(Pessoa.email.like(f"%{valor}%")).all()
+        case "4":
+            valor = input("Digite a Data de Nasc. (dd/mm/aaaa) : ").strip()
+            data_nasc = datetime.strptime(valor, "%d/%m/%Y").date()
+            pessoas = session.query(Pessoa).filter(Pessoa.data_nasc == data_nasc).all()
+        case "5":
+            pass              
+
+        case _:
+            print("Campo inexistente !")
+
+    limpar()
+
+    print("\n RESULTADO DA PESQUISA:\n")
+    if pessoas:
+        for pessoa in pessoas:
+            print(f"ID: {pessoa.id_pessoa}")
+            print(f"Nome: {pessoa.nome}")
+            print(f"E-mail: {pessoa.email}")
+            print(f"Data de Nasc. : {pessoa.data_nasc.strftime("%d/%m/%Y")}\n")
+
+
+
+
+
+
+
+ENTIDADE
+
+
+
+# sql injection - ATAQUE RACKER ao Banco
+# prepared statement - metodo de consultar o banco de forma INDIRETA - Camada de proteção contra ataques ao Banco
+
+# engine para o MySQL , e tbm instalar o Driver (MySQL connector)
+# engine = create_engine("mysql+msqlconnector://senha:usuario@endereço do servidor:porta/nome do banco")
+      
+#importar biblioteca sqlalchemy
+from sqlalchemy import Column, Integer, String, Date        # faz a conexão do python com o Banco
+
+def criar_tab_pessoa(engine, Base):
+    try:
+                
+        class Pessoa(Base):
+            __tablename__ = "pessoa"
+
+            id_pessoa = Column(Integer, primary_key=True, autoincrement=True)
+            nome = Column(String, nullable=False)
+            email = Column(String, nullable=False, unique=True)
+            data_nasc = Column(Date, nullable=False)
+        
+        Base.metadata.create_all(engine)    # comando para criar a tabela no banco
+
+        return Pessoa
+
+    except Exception as e:
+        print(f"Erro ao conectar ao Banco. {e}")
+
+
+
+
+
+MAIN
+
+
+# sql injection - ATAQUE RACKER ao Banco
+# prepared statement - metodo de consultar o banco de forma INDIRETA - Camada de proteção contra ataques ao Banco
+# engine para o MySQL , e tbm instalar o Driver (MySQL connector)
+# engine = create_engine("mysql+msqlconnector://senha:usuario@endereço do servidor:porta/nome do banco")
+      
+#importar biblioteca sqlalchemy
+from sqlalchemy import create_engine                                       # faz a conexão do python com o Banco
+from sqlalchemy.orm import declarative_base, sessionmaker                  # recurso que permite gerar uma classe e que assim gera as tabelas do banco
+import entidades as ent
+import modulo as mod
+
+def main():
+
+    engine = create_engine("sqlite:///01_crud_uma_entidade/database/db_crud.db")
+    Base = declarative_base()   # Objeto que representa Classe nativa do banco SQLite
+   
+
+    Pessoa = ent.criar_tab_pessoa(engine, Base)
+    session = sessionmaker(bind=engine)
+    session = session()
+
+    mod.limpar()
+    while True:
+        print(f"{'-'*20} 🐍 CRUD DA SERPENTE 🐍 {'-'*20}")
+        print("1 - Cadastrar nova Pessoa")
+        print("2 - Listar Pessoas")
+        print("3 - Pesquisar Pessoas")
+        print("4 - Alterar Dados de uma Pessoa")
+        print("5 - Excluir uma Pessoa")
+        print("6 - SAIR")
+
+        opcao = input("Informe a opção desejada: ").strip()
+
+        match opcao:
+            case "1":
+                mod.cadastrar_pessoa(session, Pessoa)
+                continue
+            case "2":
+                mod.listar_pessoas(session, Pessoa)
+                continue
+            case "3":
+                mod.pesquisar_pessoas(session, Pessoa)
+                continue
+            case "4":
+                pass
+
+            case "5":
+                pass
+                continue
+
+            case "6":
+                print("Você SAIU !")
+                break
+
+            case _:
+                print("Opção invalida")
+                continue
+                
+    session.close()
+
+if __name__ == "__main__":
+    main()
