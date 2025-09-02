@@ -1,4 +1,6 @@
 from datetime import datetime
+import pandas
+from sqlalchemy import create_engine
 import os
 
 
@@ -88,7 +90,13 @@ def pesquisar_pessoas(session, Pessoa):
 
 
 def alterar_dados(session, Pessoa):
+    id_pessoa = ""
+    email = ""
+    novo_nome = ""
+    novo_email = ""
+    nova_data = ""
     try:
+        print("\nPESQUISAR POR ?")
         print("1 - ID")
         print("2 - E-mail")
         print("3 - Retornar")
@@ -103,7 +111,7 @@ def alterar_dados(session, Pessoa):
                 email = input("Informe o email: ").strip()
                 pessoa = session.query(Pessoa).filter_by(email=email).first()
             case "3":
-                pass            
+                return ""          
             case _:
                 print("Campo inexistente !")
 
@@ -114,7 +122,7 @@ def alterar_dados(session, Pessoa):
                 print(f"1 - Nome: {pessoa.nome}")
                 print(f"2 - E-mail: {pessoa.email}")
                 print(f"3 - Data_Nasc.: {pessoa.data_nasc.strftime("%d/%m/%Y")}")
-                print(f"4 - NÃO ALTERAR NADA")
+                print(f"4 - Finalizar")
 
                 campo = input("Informe o que deseja alterar: ").strip()
                 limpar()
@@ -126,7 +134,7 @@ def alterar_dados(session, Pessoa):
                         continue
                     case "2":
                         novo_email = input("novo E-mail: ").strip().lower()
-                        pessoas = session.query(Pessoa).filter(Pessoa.email.like(f"{novo_email}")).all()
+                        pessoas = session.query(Pessoa).filter(Pessoa.email == (f"{novo_email}")).all()
                         if email in [pessoa.email for pessoa in pessoas]:
                             print("E-mail já cadastrado - ERRO !")
                         else:
@@ -138,12 +146,84 @@ def alterar_dados(session, Pessoa):
                         continue
                     
                     case "4":
+                        novo_nome = novo_nome if novo_nome != "" else pessoa.nome
+                        novo_email = novo_email if novo_email !="" else pessoa.email
+                        nova_data = datetime.strptime(nova_data, "%d/%m/%Y").date() if nova_data != "" else pessoa.data_nasc
                         break
                     case _:
                         print("Campo inexistente.")
-                        continue                
+                        continue    
+            
+            # inserir as alterações no Banco
+            pessoa.nome = novo_nome
+            pessoa.email = novo_email
+            pessoa.data_nasc = nova_data
+
+            session.commit()
+
+            print("Alteração realizada com sucesso !")
+
         else:
             print("Pessoa não encontrada.")
 
     except Exception as e:
         print(f"Não foi possivel alterar. {e}")
+
+def excluir_pessoa(session, Pessoa):
+    id_pessoa = ""
+    email = ""
+    pessoa = ""
+
+    print("Escolha o campo que deseja Pesquisar a pessoa, para excluir")
+    print("1 - ID")
+    print("2 - E-mail")
+    print("3 - Desistir")
+    
+    opcao = input("Informe o campo que deseja pesquisar: ").strip()
+
+    match opcao:
+        case "1":
+            id_pessoa = input("\nInforme o ID a ser excluido: ").strip()
+            pessoa = session.query(Pessoa).filter_by(id_pessoa=id_pessoa).first()
+        case "2":
+            email = input("Informe o E-mail a ser excluido: ").strip().lower()
+            pessoa = session.query(Pessoa).filter_by(email=email).first()
+            
+        case "3":
+            return  ""
+        case _:
+            print("Opção inválida !")
+    limpar()
+    if pessoa:
+        print(f"ID: {pessoa.id_pessoa}")
+        print(f"Nome: {pessoa.nome}")
+        print(f"E-mail: {pessoa.email}")
+        print(f"Data_Nasc: {pessoa.data_nasc.strftime("%d/%m/%Y")}")
+
+        
+        print("\nTEM CERTEZA QUE DESEJA EXCLUIR ?")
+        print("1 - SIM")
+        print("2 - NÃO")
+        excluir = input(" EXCLUIR ? ").strip()
+
+        match excluir:
+            case "1":
+                session.delete(pessoa)
+                session.commit()
+                print(f"Pessoa excluida com Sucesso ! ")
+            case "2":
+                pass
+            case _:
+                print("Opção invalida !")
+    else:
+        print("pessoa não encontrada ")
+    
+
+# TODO: criar função que exporte os dados para arquivo .csv
+def exportar_dados(session, Pessoa):
+    sql_query = "SELECT * from  Pessoa"
+
+    df= pandas.read_sql_query(sql_query, session.bind)
+    df.to_csv('dados_exportados.csv', index=False)
+
+    print("Dados exportados com sucesso !")
