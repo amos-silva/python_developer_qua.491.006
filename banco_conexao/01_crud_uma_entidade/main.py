@@ -49,7 +49,7 @@ def main():
                 mod.excluir_pessoa(session, Pessoa)
                 continue
             case "6":
-                mod.exportar_dados(session, Pessoa)
+                mod.exportar_excel(session, Pessoa)
                 continue
             case "7":
                 print("Você SAIU !")

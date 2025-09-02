@@ -1,6 +1,7 @@
 from datetime import datetime
 import pandas
 from sqlalchemy import create_engine
+import openpyxl
 import os
 
 
@@ -220,10 +221,21 @@ def excluir_pessoa(session, Pessoa):
     
 
 # TODO: criar função que exporte os dados para arquivo .csv
-def exportar_dados(session, Pessoa):
-    sql_query = "SELECT * from  Pessoa"
-
-    df= pandas.read_sql_query(sql_query, session.bind)
-    df.to_csv('dados_exportados.csv', index=False)
-
-    print("Dados exportados com sucesso !")
+def exportar_excel(session, Pessoa):
+    try:
+        pessoas = session.query(Pessoa).all()
+        # Cria uma lista de dicionários com os dados das pessoas
+        dados = [
+            {
+                "ID": pessoa.id_pessoa,
+                "Nome": pessoa.nome,
+                "E-mail": pessoa.email,
+                "Data_nasc": pessoa.data_nasc.strftime("%d/%m/%Y")
+            }
+            for pessoa in pessoas
+        ]
+        df = pandas.DataFrame(dados)
+        df.to_excel("01_crud_uma_entidade/planilhas_exportadas/pessoas.xlsx", index=False)
+        print("Dados exportados para pessoas.xlsx com sucesso.")
+    except Exception as e:
+        print(f"Erro ao exportar dados: {e}")
