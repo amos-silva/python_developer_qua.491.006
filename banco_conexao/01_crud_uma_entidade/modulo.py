@@ -220,7 +220,7 @@ def excluir_pessoa(session, Pessoa):
         print("pessoa não encontrada ")
     
 
-# TODO: criar função que exporte os dados para arquivo .csv
+# TODO: criar função que exporte os dados para arquivo excel
 def exportar_excel(session, Pessoa):
     try:
         pessoas = session.query(Pessoa).all()

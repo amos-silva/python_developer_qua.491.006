@@ -1,0 +1,11 @@
+instalar biblioteca flet
+pip install flet
+
+criar projeto
+flet create 01_primeiro_app_flet        ## "nome do projeto"
+
+executar o programa
+flet run 01_primeiro_app_flet
+
+executar programa na web
+flet run --web 01_primeiro_app_flet

@@ -19,9 +19,10 @@ git push
 # RECUPERAR PROJETO
 copiar o endereço do repositório no git hub
 Terminanl do VS Code
+
 # Criar a venv
 python -m venv .venv
-git 
+.venv/Scripts/activate
 
 
 # CRIAR AMBIENTE VIRTUAL
