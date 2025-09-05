@@ -5,8 +5,8 @@ criar projeto
 flet create 01_primeiro_app_flet        ## "nome do projeto"
 
 executar o programa
-flet run 01_primeiro_app_flet
+flet run 01_primeiro_app_flet           ## "nome do projeto"
 
 executar programa na web
-flet run --web 01_primeiro_app_flet
+flet run --web 01_primeiro_app_flet     ## "nome do projeto"
 
