@@ -12,10 +12,10 @@ def main(page: ft.Page):
         ft.SafeArea(
             ft.Container(
 
-                alignment=ft.alignment.center,
+                alignment=ft.alignment.center
 
             ),            
-            expand=True,
+            expand=True
         )
     )
 
