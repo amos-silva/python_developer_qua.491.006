@@ -1,0 +1,56 @@
+MVC = MODEL - VIEW - CONTROLLER
+MVT = MODEL - VIEW - TEMPLATE
+
+# Criar pasta do Projeto
+django-admin startproject "projeto_crud"
+
+# entrar na pasta do projeto
+cd projeto_crud
+
+# Executar o projeto e criar o banco
+python manage.py runserver
+
+# pagina do projeto
+PRECISA CRIAR USUARIO E SENHA DO BANCO...
+
+http://127.0.0.1:8000/
+
+http://127.0.0.1:8000/admin/login/?next=/admin/
+
+# CRIAR A APLICAÇÃO DO PROJETO
+python manage.py startapp crud_app
+
+# CRIAR SUPER USUARIO
+# MIGRATIONS... Alterações no banco
+
+python manage.py makemigrations
+
+# CRIAR TABELAS PADRÕES DO BANCO
+python manage.py migrate
+
+# CRIAR SUPER USER
+python manage.py createsuperuser
+
+-------------------------------------------------------------
+
+INSTALAR A APLICAÇÃO DENTRO DO ARQUIVO SETTINGS.pY
+(colocar o nome do app dentro de settings)
+
+CRIAR CLASSES - Dentro do arquivo ( models.py )
+ EXEMPLO:
+
+from django.db import models # type:ignore
+
+# Create your models here.
+class Pessoa(models.Model):
+    id_pessoa = models.AutoField(primary_key=True)  # auto incremento
+    nome = models.CharField(max_length=255, null=False, blank=False) # Campo obrigatorio, não vázio
+    email = models.EmailField(unique=True, null=False, blank=False)  # Campo unico - não repetido e não vazio
+    altura = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    data_nasc = models.DateField(null=False, blank=False)
+
+
+
+python manage.py makemigrations
+python manage.py migrate
+
