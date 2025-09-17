@@ -54,3 +54,12 @@ class Pessoa(models.Model):
 python manage.py makemigrations
 python manage.py migrate
 
+
+# ALTERAR UMA TABELA
+Faz as alterações na classe e depois roda o MIGRATIONS para alterações na TABELA
+
+python manage.py makemigrations
+E
+python manage.py migrate
+
+# VIEW
