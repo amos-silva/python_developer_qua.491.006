@@ -31,3 +31,8 @@ def deletar_pessoa(request, id_pessoa):
     pessoa = Pessoa.objects.get(id_pessoa=id_pessoa)
     pessoa.delete()
     return redirect('home')
+
+def buscar_pessoa(request):
+    query = request.GET.get('buscar','')
+    pessoas = Pessoa.objects.filter(nome__icontains=query)
+    return render(request, 'home.html', {'pessoas':pessoas, 'query': query})

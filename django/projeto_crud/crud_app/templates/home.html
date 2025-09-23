@@ -26,15 +26,15 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/crud_app/home">Home</a>
+                        <a class="nav-link active" aria-current="page" href="/crud_app/">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/crud_app/cadastro">Cadastrar</a>
                     </li>
 
                 </ul>
-                <form class="d-flex" role="pesquisar">
-                    <input class="form-control me-2" type="pesquisar" placeholder="pesquisar" aria-label="pesquisar" />
+                <form action="{% url 'buscar_pessoa' %}" method="GET" class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="search" name="buscar" />
                     <button class="btn btn-outline-success" type="submit">Pesquisar</button>
                 </form>
 
