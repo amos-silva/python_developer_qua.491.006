@@ -36,3 +36,6 @@ def buscar_pessoa(request):
     query = request.GET.get('buscar','')
     pessoas = Pessoa.objects.filter(nome__icontains=query)
     return render(request, 'home.html', {'pessoas':pessoas, 'query': query})
+
+def principal(request):
+    return render(request, "principal.html")

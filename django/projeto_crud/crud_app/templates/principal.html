@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}CRUD_Principal{% endblock %}
+{% block content %}
+{% load static %}
+<!-- container -->
+<div class="container">
+    <!-- Banner -->
+    <div class="container-fluid bg-primary text-white text-center p-5">
+        <h1>Bem-vindo à Tecnoformatica</h1>
+        <p>Transformando ideias em tecnologia</p>
+    </div>
+
+    <!-- Sobre nós -->
+    <div class="container my-5">
+        <h2>Sobre Nós</h2>
+        <p>Somos uma empresa de tecnologia focada em soluções inovadoras, desenvolvimento de software, e transformação
+            digital. Atendemos empresas de todos os portes com soluções personalizadas.</p>
+    </div>
+
+    <!-- Serviços -->
+    <div class="container my-5">
+        <h2>Serviços</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <h5>Desenvolvimento Web</h5>
+                <p>Sites, sistemas, e-commerce e aplicações web modernas.</p>
+            </div>
+            <div class="col-md-4">
+                <h5>Aplicativos Mobile</h5>
+                <p>Apps Android e iOS com performance e usabilidade.</p>
+            </div>
+            <div class="col-md-4">
+                <h5>Consultoria</h5>
+                <p>Ajudamos sua empresa a inovar com tecnologia e estratégia digital.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contato -->
+    <div class="container my-5">
+        <h2>Contato</h2>
+        <p>Email: contato@technova.com.br</p>
+        <p>Telefone: (11) 99999-0000</p>
+    </div>
+
+</div>
+<!-- fim do container -->
+{% endblock %}
